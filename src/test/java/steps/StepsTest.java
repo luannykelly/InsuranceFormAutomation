@@ -23,7 +23,6 @@ public class StepsTest {
 
     @Before
     public void setUp() {
-        // Coloque o caminho correto do ChromeDriver aqui
         System.setProperty("webdriver.chrome.driver", "C:\\Users\\Pessoal\\IdeaProjects\\insuranceFormAutomation\\src\\main\\resources\\chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().window().maximize();
@@ -32,15 +31,12 @@ public class StepsTest {
 
     @Given("i am on the page web")
     public void i_am_on_the_page_web() {
-        // Forçar a abertura da URL correta
         String url = "http://sampleapp.tricentis.com/101/app.php";
         driver.get(url);
 
-        // Espera para garantir que a URL correta esteja carregada
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.urlToBe(url)); // Espera até que a URL correta seja a ativa
 
-        // Espera para garantir que um elemento da página esteja visível
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("start-page-element-id"))); // Altere para um ID que exista na página
 
         page = new InsurancePage(driver); // Passando o driver para a InsurancePage

@@ -18,7 +18,6 @@ public class InsurancePage {
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // Tempo de espera
     }
 
-    // Método para preencher os dados do veículo
     public void fillOutEnterVehicleData() {
         waitForElement(By.id("make"));
         new Select(driver.findElement(By.id("make"))).selectByVisibleText("Ford");
@@ -32,7 +31,6 @@ public class InsurancePage {
         driver.findElement(By.id("nextenterinsurancedata")).click();
     }
 
-    // Método para preencher os dados do segurado
     public void fillOutEnterInsurantData() {
         waitForElement(By.id("firstname"));
         driver.findElement(By.id("firstname")).sendKeys("John");
@@ -49,7 +47,6 @@ public class InsurancePage {
         driver.findElement(By.id("nextenterproductdata")).click();
     }
 
-    // Método para preencher os dados do produto
     public void fillOutEnterProductData() {
         waitForElement(By.id("startdate"));
         driver.findElement(By.id("startdate")).sendKeys("12/01/2024");
@@ -61,14 +58,12 @@ public class InsurancePage {
         driver.findElement(By.id("nextselectpriceoption")).click();
     }
 
-    // Método para selecionar a opção de preço
     public void fillOutSelectPriceOption() {
         waitForElement(By.id("selectplatinum"));
         driver.findElement(By.id("selectplatinum")).click();
         driver.findElement(By.id("nextsendquote")).click();
     }
 
-    // Método para preencher e enviar o orçamento
     public void fillOutSendQuote() {
         waitForElement(By.id("email"));
         driver.findElement(By.id("email")).sendKeys("test@example.us");
@@ -79,21 +74,18 @@ public class InsurancePage {
         driver.findElement(By.id("sendemail")).click();
     }
 
-    // Método para verificar a mensagem de sucesso
     public boolean verifySuccessMessage() {
         waitForElement(By.xpath("/html/body/div[4]/h2"));
         WebElement message = driver.findElement(By.xpath("/html/body/div[4]/h2"));
         return message.getText().equals("Sending e-mail success");
     }
 
-    // Método para verificar o placeholder do usuário
     public boolean verifyUserPlaceholder() {
         waitForElement(By.className("sa-placeholder"));
         WebElement placeholder = driver.findElement(By.className("sa-placeholder"));
         return placeholder.isDisplayed();
     }
 
-    // Método auxiliar para aguardar a presença de um elemento
     private void waitForElement(By by) {
         wait.until(ExpectedConditions.visibilityOfElementLocated(by));
     }

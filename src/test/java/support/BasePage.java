@@ -13,10 +13,8 @@ public class BasePage {
     }
 
     public void setUp() {
-        // Define o caminho para o ChromeDriver
         System.setProperty("webdriver.chrome.driver", chromeDriverPath);
 
-        // Inicializa o ChromeDriver com as opções
         ChromeOptions options = new ChromeOptions();
         driver = new ChromeDriver(options);
         driver.manage().window().maximize();
@@ -24,7 +22,6 @@ public class BasePage {
 
     public void openUrl(String url) {
         driver.get(url);
-        // Adicione uma verificação da URL
         if (!driver.getCurrentUrl().equals(url)) {
             throw new RuntimeException("Failed to navigate to the correct URL: " + url);
         }
