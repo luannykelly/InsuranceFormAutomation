@@ -27,10 +27,24 @@ public class BasePage {
 
     public void openUrl(String url) {
         driver.get(url);
-        if (!driver.getCurrentUrl().equals(url)) {
-            throw new RuntimeException("Failed to navigate to the correct URL: " + url);
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
+        // Atualiza a URL esperada para incluir 'https'
+        String expectedUrl = url.startsWith("http://") ? url.replace("http://", "https://") : url;
+        String currentUrl = driver.getCurrentUrl();
+
+        // Verifica se a URL atual é a URL esperada
+        if (!currentUrl.equals(expectedUrl)) {
+            // Lança uma exceção com a URL atual
+            throw new RuntimeException("Failed to navigate to the correct URL: " + expectedUrl + ". Current URL: " + currentUrl);
         }
     }
+
+
 
     public void clickElementById(String elementId) {
         WebElement element = driver.findElement(By.id(elementId));
@@ -45,7 +59,9 @@ public class BasePage {
     public void setChromeDriverPath(String path) {
         this.chromeDriverPath = path;
         System.setProperty("webdriver.chrome.driver", chromeDriverPath);
-        driver.quit();
+        if (driver != null) {
+            driver.quit();
+        }
         driver = new ChromeDriver(new ChromeOptions());
     }
 

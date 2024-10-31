@@ -18,7 +18,7 @@ public class StepsTest {
     @Before
     public void setUp() {
         basePage = new BasePage(driver);
-        basePage.setUp();  // Configura o WebDriver e maximiza a janela
+        basePage.setUp();
         driver = basePage.getDriver();
         page = new InsurancePage(driver);
     }
@@ -26,14 +26,13 @@ public class StepsTest {
     @Given("i am on the page web")
     public void i_am_on_the_page_web() {
         String url = "http://sampleapp.tricentis.com/101/app.php";
-        basePage.openUrl(url);  // Usa o método para abrir a URL
+        basePage.openUrl(url);
     }
 
     @Given("i am on the page form")
     public void i_am_on_the_page_form() {
         basePage.clickElementById("nav_automobile");  // Clica no botão de veículo
 
-        // Ajuste para esperar que o formulário esteja disponível
         basePage.waitForElementById("start-page-element-id", 10);
     }
 
@@ -70,13 +69,13 @@ public class StepsTest {
 
     @Then("i should see the message {string} on screen")
     public void i_should_see_the_message_on_screen(String expectedMessage) {
-        String actualMessage = String.valueOf(page.verifySuccessMessage());  // Presumindo que retorna a mensagem esperada como String
+        String actualMessage = String.valueOf(page.verifySuccessMessage());
         Assert.assertEquals("Expected success message not found on screen", expectedMessage, actualMessage);
     }
 
     @After
     public void tearDown() {
-        basePage.closeDriver();  // Fechar o WebDriver de forma segura
+        basePage.closeDriver();
         driver = null;
     }
 }
