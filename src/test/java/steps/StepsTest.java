@@ -10,7 +10,6 @@ import pages.InsurancePage;
 import org.junit.Assert;
 import support.BasePage;
 
-
 public class StepsTest {
     private WebDriver driver;
     private BasePage basePage;
@@ -19,23 +18,23 @@ public class StepsTest {
     @Before
     public void setUp() {
         basePage = new BasePage(driver);
-        basePage.setUp();
+        basePage.setUp();  // Configura o WebDriver e maximiza a janela
         driver = basePage.getDriver();
+        page = new InsurancePage(driver);
     }
 
     @Given("i am on the page web")
     public void i_am_on_the_page_web() {
         String url = "http://sampleapp.tricentis.com/101/app.php";
-        basePage.openUrl(url);
+        basePage.openUrl(url);  // Usa o método para abrir a URL
     }
 
     @Given("i am on the page form")
     public void i_am_on_the_page_form() {
-        basePage.clickElementById("nav_automobile");
+        basePage.clickElementById("nav_automobile");  // Clica no botão de veículo
 
-        basePage.waitForElementById("start-page-element-id", 10); // Ajuste para um ID específico da página de formulário
-
-        page = new InsurancePage(driver);
+        // Ajuste para esperar que o formulário esteja disponível
+        basePage.waitForElementById("start-page-element-id", 10);
     }
 
     @When("i fill out the {string} section and press Next")
@@ -71,13 +70,13 @@ public class StepsTest {
 
     @Then("i should see the message {string} on screen")
     public void i_should_see_the_message_on_screen(String expectedMessage) {
-        Boolean actualMessage = page.verifySuccessMessage();
+        String actualMessage = String.valueOf(page.verifySuccessMessage());  // Presumindo que retorna a mensagem esperada como String
         Assert.assertEquals("Expected success message not found on screen", expectedMessage, actualMessage);
     }
 
     @After
     public void tearDown() {
-        basePage.closeDriver();
+        basePage.closeDriver();  // Fechar o WebDriver de forma segura
         driver = null;
     }
 }

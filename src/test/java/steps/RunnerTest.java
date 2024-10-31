@@ -17,6 +17,5 @@ import io.cucumber.junit.CucumberOptions;
         monochrome = true,
         tags = "@Test"
 )
-
 public class RunnerTest {
 }
