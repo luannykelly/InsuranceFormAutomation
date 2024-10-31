@@ -1,6 +1,7 @@
   Feature: Vehicle Insurance Form
     Scenario: Successfully complete and submit the form
       Given i am on the page web
+      And i am on the page form
       When i fill out the "Enter Vehicle Data" section and press Next
       And i fill out the "Enter Insurant Data" section and press Next
       And i fill out the "Enter Product Data" section and press Next

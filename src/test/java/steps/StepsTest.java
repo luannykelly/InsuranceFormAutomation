@@ -5,16 +5,11 @@ import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.InsurancePage;
 import org.junit.Assert;
 import support.BasePage;
 
-import java.time.Duration;
 
 public class StepsTest {
     private WebDriver driver;
@@ -23,23 +18,24 @@ public class StepsTest {
 
     @Before
     public void setUp() {
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\Pessoal\\IdeaProjects\\insuranceFormAutomation\\src\\main\\resources\\chromedriver.exe");
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        basePage = new BasePage(driver); // Criação da BasePage
+        basePage = new BasePage(driver);
+        basePage.setUp();
+        driver = basePage.getDriver();
     }
 
     @Given("i am on the page web")
     public void i_am_on_the_page_web() {
         String url = "http://sampleapp.tricentis.com/101/app.php";
-        driver.get(url);
+        basePage.openUrl(url);
+    }
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.urlToBe(url)); // Espera até que a URL correta seja a ativa
+    @Given("i am on the page form")
+    public void i_am_on_the_page_form() {
+        basePage.clickElementById("nav_automobile");
 
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("start-page-element-id"))); // Altere para um ID que exista na página
+        basePage.waitForElementById("start-page-element-id", 10); // Ajuste para um ID específico da página de formulário
 
-        page = new InsurancePage(driver); // Passando o driver para a InsurancePage
+        page = new InsurancePage(driver);
     }
 
     @When("i fill out the {string} section and press Next")
@@ -75,15 +71,13 @@ public class StepsTest {
 
     @Then("i should see the message {string} on screen")
     public void i_should_see_the_message_on_screen(String expectedMessage) {
-        Boolean actualMessage = page.verifySuccessMessage(); // Presuma que você tenha um método que retorna a mensagem
+        Boolean actualMessage = page.verifySuccessMessage();
         Assert.assertEquals("Expected success message not found on screen", expectedMessage, actualMessage);
     }
 
     @After
     public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-            driver = null; // Limpa a referência do driver após encerrá-lo
-        }
+        basePage.closeDriver();
+        driver = null;
     }
 }

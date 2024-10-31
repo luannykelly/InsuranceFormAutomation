@@ -34,12 +34,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>acc.br</groupId>
-            <artifactId>insuranceFormAutomation</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-junit</artifactId>
             <version>7.20.1</version>
